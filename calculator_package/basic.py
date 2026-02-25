@@ -70,7 +70,7 @@ class Calculator:
         Display the calculation history
         """
         if self.history == []:
-            print("Ooh non history is empty.. Make an operation!")
+            print("Ooh no history is empty.. Make an operation!")
         else:
             for operation in self.history:
                 print(operation)
