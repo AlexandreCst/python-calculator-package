@@ -5,6 +5,8 @@ import logging
 
 from pathlib import Path
 
+from calculator_package.exceptions import InvalidOperationError
+
 # Log config
 logger = logging.getLogger(__name__)
 logger.setLevel("DEBUG")
@@ -41,6 +43,7 @@ class Calculator:
         b: float
         return type: float"""
         self.history.append(f"{a:.2f} + {b:.2f} = {a + b:.2f}")
+        logger.debug(f"Operation: {a:.2f} + {b:.2f} = {a + b:.2f}")
         return a + b
     
     def subtraction(self, a: float, b: float) -> float:
@@ -53,6 +56,7 @@ class Calculator:
         b: float
         return type: float"""
         self.history.append(f"{a:.2f} - {b:.2f} = {a - b:.2f}")
+        logger.debug(f"Operation: {a:.2f} - {b:.2f} = {a - b:.2f}")
         return a - b
     
     def multiplication(self, a: float, b: float) -> float:
@@ -66,6 +70,7 @@ class Calculator:
         return type: float
         """
         self.history.append(f"{a:.2f} * {b:.2f} = {a * b:.2f}")
+        logger.debug(f"Operation: {a:.2f} * {b:.2f} = {a * b:.2f}")
         return a * b
     
     def division(self, a: float, b: float):
@@ -81,8 +86,10 @@ class Calculator:
         try:
             result = a / b
             self.history.append(f"{a:.2f} / {b:.2f} = {a / b:.2f}")
+            logger.debug(f"Operation: {a:.2f} / {b:.2f} = {a / b:.2f}")
         except ZeroDivisionError:
-            return Exception("Oops.. Division by 0!")
+            logger.error("Invalid operation!")
+            raise InvalidOperationError("Division by zero not supported.")
             
         return result
     

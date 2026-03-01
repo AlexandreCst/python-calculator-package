@@ -1,8 +1,11 @@
 """This module contain the calculator subclass with more scientific operations
 (power, square root, modulo and factorial)."""
 
-from calculator_package.basic import Calculator
 from math import sqrt, factorial
+
+from calculator_package.basic import Calculator, logger
+from calculator_package.exceptions import InvalidOperationError
+
 
 class ScientificCalculator(Calculator):
     """
@@ -28,6 +31,7 @@ class ScientificCalculator(Calculator):
         :rtype: float
         """
         self.history.append(f"{a:.2f} ** {b:.2f} = {(a ** b):.2f}")
+        logger.debug(f"Operation: {a:.2f} ** {b:.2f} = {(a ** b):.2f}")
         return a ** b
     
     def modulo(self, a: float, b: float):
@@ -44,8 +48,10 @@ class ScientificCalculator(Calculator):
         try:
             result = a % b
             self.history.append(f"{a:.2f} % {b:.2f} = {result:.2f}")
+            logger.debug(f"Operation: {a:.2f} % {b:.2f} = {result:.2f}")
         except ZeroDivisionError:
-            return Exception("Oops.. Division by 0 impossible!")
+            logger.error("Invalid operation!")
+            raise InvalidOperationError("Division by zero not supported.")
         return result
     
     def square_root(self, a: float):
@@ -60,9 +66,11 @@ class ScientificCalculator(Calculator):
         try:
             result = sqrt(a)
             self.history.append(f"sqrt({a:.2f}) = {result:.2f}")
+            logger.debug(f"Operation: sqrt({a:.2f}) = {result:.2f}")
         except ValueError:
-            return Exception(
-                "Oops.. square root of a negative number impossible!"
+            logger.error("Invalid operation!")
+            raise InvalidOperationError(
+                "Square root of negative number not supported."
                 )
         return result
     
@@ -78,6 +86,10 @@ class ScientificCalculator(Calculator):
         try:
             result = factorial(int(a))
             self.history.append(f"{int(a)}! = {result}")
+            logger.debug(f"Operation: {int(a)}! = {result}")
         except ValueError:
-            return Exception("Oops.. factorial of negative number impossible!")
+            logger.error("Invalid operation!")
+            raise InvalidOperationError(
+                "Facorial of negative number not supported."
+            )
         return result
