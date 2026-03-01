@@ -1,7 +1,28 @@
 """This module contain the clasic calculator class (addition,
  subtraction, mulitplication and division)."""
 
+import logging
+
 from pathlib import Path
+
+# Log config
+logger = logging.getLogger(__name__)
+logger.setLevel("DEBUG")
+console_logger = logging.StreamHandler()
+console_logger.setLevel("WARNING")
+file_logger = logging.FileHandler('calculator.log', mode='a', encoding='utf-8')
+file_logger.setLevel("DEBUG")
+logger.addHandler(console_logger)
+logger.addHandler(file_logger)
+formatter = logging.Formatter(
+    "[{asctime}] - {levelname} - {message}",
+    style="{",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+console_logger.setFormatter(formatter)
+file_logger.setFormatter(formatter)
+
+
 
 class Calculator:
     """This class represent a calculator with basic operations"""
