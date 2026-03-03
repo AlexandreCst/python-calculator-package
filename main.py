@@ -6,7 +6,7 @@ done.
 
 from calculator_package import ScientificCalculator
 from calculator_package import get_valid_operation, get_valid_number, check_quit
-from calculator_package import handle_error
+from calculator_package import InvalidOperationError, HistoryEmptyError
 
 def main():
     """Calculator script."""
@@ -29,11 +29,18 @@ def main():
         # Make operations which only used to one number
         if operation in ["sqrt", "!"]:
             if operation == "sqrt":
-                square_root = calculation.square_root(first_number)
-                handle_error(square_root)
+                try:
+                    square_root = calculation.square_root(first_number)
+                    print(f"\nResult: {square_root:.2f}")
+                except InvalidOperationError as e:
+                    print(f"Error: {e}")
+                
             else:
-                factor = calculation.factorial_number(int(first_number))
-                handle_error(factor)      
+                try:
+                    factor = calculation.factorial_number(int(first_number))
+                    print(f"Result: {factor}")
+                except InvalidOperationError as e:
+                    print(f"Error: {e}")
         
         else:
             # Make operations which need 2 numbers
@@ -60,12 +67,18 @@ def main():
                 print(f"\nResult: {power:.2f}")
             
             elif operation == "%":
-                modulo = calculation.modulo(first_number, second_number)
-                handle_error(modulo)
+                try:
+                    modulo = calculation.modulo(first_number, second_number)
+                    print(f"Result: {modulo:.2f}")
+                except InvalidOperationError as e:
+                    print(f"Error: {e}")
 
             else:
-                div = calculation.division(first_number, second_number)
-                handle_error(div)
+                try:
+                    div = calculation.division(first_number, second_number)
+                    print(f"Result: {div:.2f}")
+                except InvalidOperationError as e:
+                    print(f"Error: {e}")                
         
 
         # Ask if the user wishes to display its history
@@ -76,7 +89,10 @@ def main():
 
         # Display the history
         if user_history.lower().strip() in ['y', 'yes']:
-            calculation.show_history()
+            try:
+                calculation.show_history()
+            except HistoryEmptyError as e:
+                print(f"Error: {e}")
 
 
 
