@@ -90,6 +90,6 @@ class ScientificCalculator(Calculator):
         except ValueError:
             logger.error("Invalid operation!")
             raise InvalidOperationError(
-                "Facorial of negative number not supported."
+                "Factorial of negative number not supported."
             )
         return result

@@ -5,7 +5,7 @@ import logging
 
 from pathlib import Path
 
-from calculator_package.exceptions import InvalidOperationError
+from calculator_package.exceptions import InvalidOperationError, HistoryEmptyError
 
 # Log config
 logger = logging.getLogger(__name__)
@@ -98,8 +98,10 @@ class Calculator:
         Display the calculation history
         """
         if self.history == []:
-            print("Ooh no history is empty.. Make an operation!")
+            logger.error("History empty!")
+            raise HistoryEmptyError("History empty.")
         else:
+            logger.debug("Show history.")
             for operation in self.history:
                 print(operation)
 
