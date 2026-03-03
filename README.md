@@ -16,6 +16,9 @@ division, show history and clear history)
 - Calculation history (viewable on demand)
 - Exit anytime with 'q' or 'quit' command
 - Formatted output with 2 decimal places
+- Logger file (calculator.log) & logger console
+- Exceptions custom (InvalidOperationError, HistoryEmptyError, CalculatorError)
+- Catching exceptions with try/except
 
 ## Installation
 Clone the repository:
